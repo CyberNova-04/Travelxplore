@@ -45,7 +45,8 @@ const updateUIForAuth = user => {
     if (user) {
         loginBtn && (loginBtn.style.display='none');
         userMenu && (userMenu.style.display='flex');
-        userName && (userName.textContent=user.username);
+        userName && (userName.textContent='Hi, ' + user.username);
+
     } else {
         loginBtn && (loginBtn.style.display='inline-block');
         userMenu && (userMenu.style.display='none');

@@ -22,7 +22,27 @@ img{max-width:100%;display:block}
 .logo{font-size:1.8rem;font-weight:900;display:flex;align-items:center;gap:.5rem;color:var(--text-dark)}
 .logo-icon{width:45px;height:45px;background:var(--gradient-primary);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:1.5rem}
 .logo-text{background:var(--gradient-primary);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-links{display:flex;list-style:none;gap:2rem;align-items:center}
+.nav-links{display:flex;list-style:none;gap:2rem;align-items:center;margin: 0 auto}
+.auth-buttons {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+#userMenu {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Add space between username and logout button */
+}
+
+#userName {
+  color: white; /* Or your preferred color */
+  font-weight: 600;
+  font-size: 1rem;
+  background: hwb(185 1% 5%); /* Optional: subtle background */
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
 .nav-links a{font-weight:600;transition:color var(--transition)}
 .nav-links a:hover{color:var(--accent-color)}
 .btn{padding:.7rem 1.5rem;border-radius:var(--border-radius);cursor:pointer;font-weight:600;transition:var(--transition);display:inline-block;text-align:center}
@@ -123,4 +143,202 @@ img{max-width:100%;display:block}
   .hero-title{font-size:3rem}
   .search-section{flex-direction:column;bottom:-300px}
   .section{padding:4rem 5% 2rem}
+}
+
+/* Hero Section Styles */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  transition: background-image 1s ease-in-out;
+  padding: 2rem;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 800px;
+  margin-bottom: 2rem;
+}
+
+.hero-title {
+  font-size: 5rem;
+  font-weight: 900;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7);
+  animation: fadeInUp 1s ease;
+}
+
+.hero-subtitle {
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+  animation: fadeInUp 1.2s ease;
+}
+
+.hero-btn {
+  font-size: 1.1rem;
+  padding: 1rem 2.5rem;
+  animation: fadeInUp 1.4s ease;
+}
+
+/* Floating Destination Cards */
+.destination-cards {
+  position: absolute;
+  bottom: 150px;
+  right: 5%;
+  display: flex;
+  gap: 1rem;
+  z-index: 3;
+}
+
+.destination-card {
+  width: 200px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s;
+  cursor: pointer;
+  animation: floatIn 1.5s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-10px);
+}
+
+.destination-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.card-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 1rem;
+  color: white;
+}
+
+.card-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  color: #bee5eb;
+}
+
+.card-location {
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.star-rating {
+  color: #ffd700;
+  font-size: 0.9rem;
+}
+
+/* Search Section */
+.search-section {
+  position: center;
+  z-index: 2;
+  margin-top: 3rem;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 900px;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.search-input {
+  flex: 1;
+  min-width: 150px;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+/* Place only the marked card in the colored marked area */
+.card-moved1 {
+  /* Specific position for colored area - adjust as per your screenshot */
+  position: absolute;
+  /* Example: Set top and right for your colored area */
+  top: -490px;         /* Adjust as per your needs */
+  right: 0px;       /* Adjust as per your needs */
+  width: 270px;
+}
+
+/* Place only the marked card in the colored marked area */
+.card-moved2 {
+  /* Specific position for colored area - adjust as per your screenshot */
+  position: absolute;
+  /* Example: Set top and right for your colored area */
+  top: -200px;         /* Adjust as per your needs */
+  right: 0px;       /* Adjust as per your needs */
+  width: 270px;
+}
+
+
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  
+  .destination-cards {
+    display: none;
+  }
+  
+  .search-section {
+    padding: 1rem;
+  }
 }

@@ -20,28 +20,60 @@
       <li><a href="/packages">Packages</a></li>
       <li><a href="/about">About</a></li>
       <li><a href="/contact">Contact</a></li>
-      <li id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></li>
-      <li id="userMenu" style="display:none;">
-        <span id="userName"></span>
-        <a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a>
-      </li>
-    </ul>
+       </ul>
+  
+  <!-- Wrap login/logout in a separate div -->
+  <div class="auth-buttons">
+    <div id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></div>
+    <div id="userMenu" style="display: none;">
+      <span id="userName"></span>
+      <a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a>
+    </div>
+  </div>
   </nav>
 
-  <section class="hero" id="home" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')">
-    <div class="hero-content">
-      <h1 class="hero-title">INDONESIA</h1>
-      <p class="hero-subtitle">Discover the paradise of thousands of islands, pristine beaches, and rich cultural heritage.</p>
-      <a href="/destinations" class="btn btn-primary hero-btn">Explore Now <i class="fas fa-arrow-right"></i></a>
+  <!-- Hero Section -->
+<section class="hero" id="home">
+  <div class="hero-overlay"></div>
+  
+  <div class="hero-content">
+    <h1 class="hero-title">INDONESIA</h1>
+    <p class="hero-subtitle">Discover the paradise of thousands of islands, pristine beaches, and rich cultural heritage.</p>
+    <a href="/destinations" class="btn btn-primary hero-btn">
+      Explore Now <i class="fas fa-arrow-right"></i>
+    </a>
+  </div>
+
+  <!-- Floating Destination Cards -->
+  <div class="destination-cards">
+    <div class="destination-card card-moved1">
+      <img src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=500" alt="Bali">
+      <div class="card-overlay">
+        <div class="card-title">Bali Paradise</div>
+        <div class="card-location"><i class="fas fa-map-marker-alt"></i> Indonesia</div>
+        <div class="star-rating">★★★★★</div>
+      </div>
     </div>
-    <div class="search-section">
-      <input type="text" id="searchDestination" class="search-input" placeholder="Where to?">
-      <input type="date" class="search-input">
-      <input type="date" class="search-input">
-      <input type="number" class="search-input" placeholder="Guests" min="1" value="1">
-      <button class="btn btn-primary" onclick="handleSearch()">Search</button>
+    <div class="destination-card card-moved2">
+      <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=500" alt="Maldives">
+      <div class="card-overlay">
+        <div class="card-title">Maldives Beach</div>
+        <div class="card-location"><i class="fas fa-map-marker-alt"></i> Maldives</div>
+        <div class="star-rating">★★★★★</div>
+      </div>
     </div>
-  </section>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-section">
+    <input type="text" id="searchDestination" class="search-input" placeholder="Where to?">
+    <input type="date" class="search-input">
+    <input type="date" class="search-input">
+    <input type="number" class="search-input" placeholder="Guests" min="1" value="1">
+    <button class="btn btn-primary" onclick="handleSearch()">Search</button>
+  </div>
+</section>
+
 
   <section class="section" id="destinations">
     <div class="container">
@@ -88,6 +120,60 @@
         <div style="text-align:center;">
           <div style="font-size:3rem;font-weight:900;">24/7</div>
           <div>Customer Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What Our Travelers Say Section -->
+  <section class="section" style="background: #f5f5f5; padding: 4rem 5%;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto;">
+      <div style="text-align: center; margin-bottom: 3rem;">
+        <h2 class="section-title" style="font-size: 2.5rem; color: #1a237e; margin-bottom: 0.5rem;">What Our Travelers Say</h2>
+        <p class="section-subtitle" style="color: #666; font-size: 1.1rem;">Real experiences from real travelers</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="card" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center;">
+          <p style="font-style: italic; color: #555; margin-bottom: 1.5rem; line-height: 1.6;">
+            "TravelXplore made our honeymoon to Bali absolutely perfect! Every detail was taken care of."
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
+            <img src="https://i.pravatar.cc/150?img=1" alt="Sarah" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+            <div style="text-align: left;">
+              <h4 style="margin-bottom: 0.2rem; color: #1a237e; font-weight: 700;">Ritesh Rana</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">Traveled to Bali</p>
+              <div style="color: #ffd700;">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center;">
+          <p style="font-style: italic; color: #555; margin-bottom: 1.5rem; line-height: 1.6;">
+            "Best travel agency ever! The team was professional and helped us plan the perfect European adventure."
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
+            <img src="https://i.pravatar.cc/150?img=12" alt="Michael" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+            <div style="text-align: left;">
+              <h4 style="margin-bottom: 0.2rem; color: #1a237e; font-weight: 700;">Saurav Singh</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">Traveled to Europe</p>
+              <div style="color: #ffd700;">★★★★★</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center;">
+          <p style="font-style: italic; color: #555; margin-bottom: 1.5rem; line-height: 1.6;">
+            "Amazing service from start to finish! Every moment was memorable. Thank you TravelXplore!"
+          </p>
+          <div style="display: flex; align-items: center; gap: 1rem; justify-content: center;">
+            <img src="https://i.pravatar.cc/150?img=5" alt="Emily" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+            <div style="text-align: left;">
+              <h4 style="margin-bottom: 0.2rem; color: #1a237e; font-weight: 700;">Anjali Karn</h4>
+              <p style="color: #666; font-size: 0.9rem; margin-bottom: 0.5rem;">Traveled to Dubai</p>
+              <div style="color: #ffd700;">★★★★★</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -147,6 +233,48 @@
 
   <script src="/js/main.js"></script>
   <script>
+// Hero section auto-slide functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const heroBackgrounds = [
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920',
+    'https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1920',
+    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1920'
+  ];
+  
+  const heroTitles = ['INDONESIA', 'MALDIVES', 'SANTORINI'];
+  
+  const heroSubtitles = [
+    'Discover the paradise of thousands of islands, pristine beaches, and rich cultural heritage.',
+    'Luxury overwater villas, crystal-clear waters, and unforgettable tropical experiences.',
+    'Experience stunning sunsets, white-washed villages, and Mediterranean charm.'
+  ];
+
+  let currentHeroIndex = 0;
+  const hero = document.querySelector('.hero');
+  const heroTitle = document.querySelector('.hero-title');
+  const heroSubtitle = document.querySelector('.hero-subtitle');
+
+  // Auto-slide every 6 seconds
+  setInterval(() => {
+    currentHeroIndex = (currentHeroIndex + 1) % heroBackgrounds.length;
+    hero.style.backgroundImage = `url('${heroBackgrounds[currentHeroIndex]}')`;
+    heroTitle.textContent = heroTitles[currentHeroIndex];
+    heroSubtitle.textContent = heroSubtitles[currentHeroIndex];
+  }, 6000);
+});
+
+// Search functionality
+function handleSearch() {
+  const searchValue = document.getElementById('searchDestination').value;
+  if (searchValue) {
+    window.location.href = `/destinations?search=${encodeURIComponent(searchValue)}`;
+  } else {
+    window.location.href = '/destinations';
+  }
+}
+</script>
+
+  <script>
     document.addEventListener('DOMContentLoaded', async () => {
       const dest = await TravelXplore.loadDestinations({ featured:'true', limit:6 });
       TravelXplore.renderDestinationCards(dest,'featuredDestinations');
@@ -158,6 +286,6 @@
       const v = document.getElementById('searchDestination').value;
       window.location.href = v? `/destinations?search=${encodeURIComponent(v)}` : '/destinations';
     }
-  </script>
+  </script>  
 </body>
 </html>
