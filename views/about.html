@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - TravelXplore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-plane-departure"></i>
+            </div>
+            <span class="logo-text">TravelXplore</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/destinations">Destinations</a></li>
+            <li><a href="/packages">Packages</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></li>
+            <li id="userMenu" style="display: none;">
+                <span id="userName"></span>
+                <a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <h1>About TravelXplore</h1>
+        <p>Your trusted partner in creating unforgettable travel experiences</p>
+    </div>
+
+    <!-- About Section -->
+    <section class="section">
+        <div class="container">
+            <div class="grid grid-2" style="align-items: center; gap: 3rem;">
+                <div>
+                    <h2 style="font-size: 2.5rem; color: var(--primary-blue); margin-bottom: 1rem;">Who We Are</h2>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 1rem;">
+                        TravelXplore is a leading travel booking platform dedicated to making your dream vacations a reality. 
+                        With years of experience in the travel industry, we specialize in creating personalized travel experiences 
+                        that cater to every traveler's unique preferences and budget.
+                    </p>
+                    <p style="font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 1rem;">
+                        Our mission is to inspire and enable people to explore the world by providing access to the best 
+                        destinations, accommodations, and experiences at competitive prices.
+                    </p>
+                    <a href="/packages" class="btn btn-primary">Explore Our Packages</a>
+                </div>
+                <div>
+                    <img src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600" 
+                         alt="Travel" style="width: 100%; border-radius: 12px; box-shadow: var(--shadow-card);">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="section" style="background: var(--background-light);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Why Choose TravelXplore?</h2>
+                <p class="section-subtitle">We make travel planning easy and enjoyable</p>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="card" style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; 
+                                display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: white; font-size: 2rem;">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-blue);">500+ Destinations</h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        Explore a wide range of destinations across the globe, from tropical beaches to mountain retreats.
+                    </p>
+                </div>
+
+                <div class="card" style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; 
+                                display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: white; font-size: 2rem;">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-blue);">Secure Booking</h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        Your safety is our priority. We use industry-leading security measures to protect your data.
+                    </p>
+                </div>
+
+                <div class="card" style="text-align: center; padding: 2rem;">
+                    <div style="width: 80px; height: 80px; background: var(--gradient-primary); border-radius: 50%; 
+                                display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; color: white; font-size: 2rem;">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-blue);">24/7 Support</h3>
+                    <p style="color: #666; line-height: 1.6;">
+                        Our dedicated support team is always ready to assist you with any questions or concerns.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Values -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Core Values</h2>
+            </div>
+
+            <div class="grid grid-2" style="gap: 2rem;">
+                <div style="padding: 2rem; background: white; border-radius: 12px; box-shadow: var(--shadow-card);">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                        <i class="fas fa-heart" style="color: var(--accent-color);"></i> Customer First
+                    </h3>
+                    <p style="color: #666; line-height: 1.8;">
+                        We prioritize our customers' needs and strive to exceed their expectations with every interaction.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; background: white; border-radius: 12px; box-shadow: var(--shadow-card);">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                        <i class="fas fa-star" style="color: var(--accent-color);"></i> Quality Service
+                    </h3>
+                    <p style="color: #666; line-height: 1.8;">
+                        We partner with trusted providers to ensure you receive the highest quality travel experiences.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; background: white; border-radius: 12px; box-shadow: var(--shadow-card);">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                        <i class="fas fa-handshake" style="color: var(--accent-color);"></i> Trust & Transparency
+                    </h3>
+                    <p style="color: #666; line-height: 1.8;">
+                        We believe in honest communication and transparent pricing with no hidden fees.
+                    </p>
+                </div>
+
+                <div style="padding: 2rem; background: white; border-radius: 12px; box-shadow: var(--shadow-card);">
+                    <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                        <i class="fas fa-leaf" style="color: var(--accent-color);"></i> Sustainable Travel
+                    </h3>
+                    <p style="color: #666; line-height: 1.8;">
+                        We promote responsible tourism practices that protect the environment and local communities.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>TravelXplore</h3>
+                <p>Your trusted partner for unforgettable travel experiences.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/packages">Packages</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@travelxplore.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TravelXplore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>

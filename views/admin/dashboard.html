@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TravelXplore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+    <!-- Top Navbar -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-plane-departure"></i>
+            </div>
+            <span class="logo-text">TravelXplore</span>
+        </a>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+            <span style="color: var(--primary-blue); font-weight: 600;">Admin Panel</span>
+            <a href="#" id="adminLogout" class="btn btn-secondary">Logout</a>
+        </div>
+    </nav>
+
+    <!-- Admin Wrapper -->
+    <div class="admin-wrapper">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-header">
+                <h3>Admin Panel</h3>
+                <p id="adminName">Administrator</p>
+            </div>
+
+            <ul class="admin-menu">
+                <li><a href="/admin" class="active"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a></li>
+                <li><a href="/admin/destinations"><i class="fas fa-map-marked-alt"></i> <span>Destinations</span></a></li>
+                <li><a href="/admin/packages"><i class="fas fa-box"></i> <span>Packages</span></a></li>
+                <li><a href="/"><i class="fas fa-home"></i> <span>View Website</span></a></li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Dashboard Overview</h1>
+                <div class="admin-user">
+                    <div class="admin-avatar" id="adminAvatar">A</div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-label">Total Destinations</div>
+                            <div class="stat-number" id="totalDestinations">0</div>
+                        </div>
+                        <div class="stat-icon blue">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> Active destinations
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-label">Total Packages</div>
+                            <div class="stat-number" id="totalPackages">0</div>
+                        </div>
+                        <div class="stat-icon green">
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change positive">
+                        <i class="fas fa-arrow-up"></i> Available packages
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-label">Total Messages</div>
+                            <div class="stat-number" id="totalMessages">0</div>
+                        </div>
+                        <div class="stat-icon orange">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">
+                        Contact form submissions
+                    </div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <div>
+                            <div class="stat-label">New Messages</div>
+                            <div class="stat-number" id="newMessages">0</div>
+                        </div>
+                        <div class="stat-icon purple">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">
+                        Unread messages
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="admin-card">
+                <div class="card-header">
+                    <h3>Quick Actions</h3>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; padding: 1rem 0;">
+                    <a href="/admin/add-destination" class="btn btn-add" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-plus-circle"></i> Add Destination
+                    </a>
+                    <a href="/admin/add-package" class="btn btn-add" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-plus-circle"></i> Add Package
+                    </a>
+                    <a href="/admin/destinations" class="btn btn-outline" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-list"></i> View All Destinations
+                    </a>
+                    <a href="/admin/packages" class="btn btn-outline" style="text-decoration: none; text-align: center;">
+                        <i class="fas fa-list"></i> View All Packages
+                    </a>
+                </div>
+            </div>
+
+            <!-- Welcome Message -->
+            <div class="admin-card">
+                <div style="padding: 2rem; text-align: center;">
+                    <i class="fas fa-rocket" style="font-size: 4rem; color: var(--primary-blue); margin-bottom: 1rem;"></i>
+                    <h2>Welcome to TravelXplore Admin Panel!</h2>
+                    <p style="color: #666; margin-top: 1rem;">Manage your travel website efficiently from this dashboard.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/js/admin.js"></script>
+</body>
+</html>

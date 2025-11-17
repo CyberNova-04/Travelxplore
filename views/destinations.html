@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Destinations - TravelXplore</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+      <span class="logo-text">TravelXplore</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/destinations">Destinations</a></li>
+      <li><a href="/packages">Packages</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></li>
+      <li id="userMenu" style="display:none;"><span id="userName"></span><a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <h1>Explore Destinations</h1>
+    <p>Discover amazing places around the world</p>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:2rem;">
+        <input id="searchInput" type="text" class="search-input" placeholder="Search destinations..." style="flex:1;min-width:250px;">
+        <select id="countryFilter" class="search-input" style="width:200px;">
+          <option value="">All Countries</option>
+        </select>
+        <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
+      </div>
+      <div class="grid grid-3" id="destinationsGrid"><div class="loading"></div></div>
+      <div id="emptyState" class="empty-state" style="display:none;">
+        <i class="fas fa-map-marked-alt empty-state-icon"></i>
+        <h3>No destinations found</h3>
+        <p>Try adjusting your search or filters</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      ...  
+    </div>
+    <div class="footer-bottom">&copy; 2025 TravelXplore. All rights reserved.</div>
+  </footer>
+
+   <!-- Replace your existing grid + script with this -->
+  <div class="grid grid-3" id="destinationsGrid"></div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Show loading spinner
+      document.getElementById('destinationsGrid').innerHTML = '<div class="loading"></div>';
+
+      // Fetch and render
+      try {
+        const data = await TravelXplore.loadDestinations({});
+        TravelXplore.renderDestinationCards(data, 'destinationsGrid');
+      } catch (err) {
+        console.error(err);
+        document.getElementById('destinationsGrid').innerHTML =
+          '<p class="text-center">Failed to load destinations.</p>';
+      }
+    });
+  </script>
+
+</body>
+</html>

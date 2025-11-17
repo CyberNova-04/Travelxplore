@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manage Packages - Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body>
+  <!-- Top Navbar -->
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+      <span class="logo-text">TravelXplore</span>
+    </a>
+    <div style="display:flex;align-items:center;gap:1rem;">
+      <span style="color:var(--primary-blue);font-weight:600;">Admin Panel</span>
+      <a href="#" id="adminLogout" class="btn btn-secondary">Logout</a>
+    </div>
+  </nav>
+
+  <div class="admin-wrapper">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <div class="admin-sidebar-header">
+        <h3>Admin Panel</h3>
+        <p id="adminName">Administrator</p>
+      </div>
+      <ul class="admin-menu">
+        <li><a href="/admin"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
+        <li><a href="/admin/destinations"><i class="fas fa-map-marked-alt"></i><span>Destinations</span></a></li>
+        <li><a href="/admin/packages" class="active"><i class="fas fa-box"></i><span>Packages</span></a></li>
+        <li><a href="/"><i class="fas fa-home"></i><span>View Website</span></a></li>
+      </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+      <div class="admin-header"><h1>Manage Packages</h1></div>
+      <div class="admin-card">
+        <div class="card-header">
+          <h3>All Packages</h3>
+          <div class="search-box">
+            <input type="text" id="searchPackages" class="search-input" placeholder="Search packages...">
+            <a href="/admin/add-package" class="btn-add"><i class="fas fa-plus"></i> Add New</a>
+          </div>
+        </div>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th><th>Image</th><th>Title</th><th>Destination</th>
+              <th>Duration</th><th>Price</th><th>Status</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="packagesTableBody"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="/js/main.js"></script>
+  <script>
+    async function loadAdminPackages() {
+      const tbody = document.getElementById('packagesTableBody');
+      tbody.innerHTML = '<tr><td colspan="8" class="text-center"><div class="loading"></div></td></tr>';
+      try {
+        const data = await TravelXplore.apiRequest('/packages?limit=100');
+        if (!data.packages.length) {
+          tbody.innerHTML = '<tr><td colspan="8" class="text-center">No packages found</td></tr>';
+          return;
+        }
+        tbody.innerHTML = data.packages.map(pkg => `
+          <tr>
+            <td>${pkg.id}</td>
+            <td><img src="${pkg.image}" class="table-image"/></td>
+            <td>${pkg.title}</td>
+            <td>${pkg.destination_name}</td>
+            <td>${pkg.duration_days} Days</td>
+            <td>${parseFloat(pkg.price).toFixed(2)}</td>
+            <td><span class="badge badge-${pkg.featured ? 'success' : 'warning'}">
+              ${pkg.featured ? 'Featured' : 'Regular'}
+            </span></td>
+            <td class="action-buttons">
+              <button class="btn-icon btn-delete" onclick="deletePackage(${pkg.id})">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        `).join('');
+      } catch (err) {
+        console.error(err);
+        tbody.innerHTML = '<tr><td colspan="8" class="text-center">Error loading data</td></tr>';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', loadAdminPackages);
+  </script>
+</body>
+</html>

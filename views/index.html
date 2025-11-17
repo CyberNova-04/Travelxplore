@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="TravelXplore - Discover amazing destinations and book your dream vacation">
+  <title>TravelXplore - Explore the World</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <nav class="navbar">
+    <a href="/" class="logo">
+      <div class="logo-icon"><i class="fas fa-plane-departure"></i></div>
+      <span class="logo-text">TravelXplore</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="/">Home</a></li>
+      <li><a href="/destinations">Destinations</a></li>
+      <li><a href="/packages">Packages</a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact">Contact</a></li>
+      <li id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></li>
+      <li id="userMenu" style="display:none;">
+        <span id="userName"></span>
+        <a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a>
+      </li>
+    </ul>
+  </nav>
+
+  <section class="hero" id="home" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1920')">
+    <div class="hero-content">
+      <h1 class="hero-title">INDONESIA</h1>
+      <p class="hero-subtitle">Discover the paradise of thousands of islands, pristine beaches, and rich cultural heritage.</p>
+      <a href="/destinations" class="btn btn-primary hero-btn">Explore Now <i class="fas fa-arrow-right"></i></a>
+    </div>
+    <div class="search-section">
+      <input type="text" id="searchDestination" class="search-input" placeholder="Where to?">
+      <input type="date" class="search-input">
+      <input type="date" class="search-input">
+      <input type="number" class="search-input" placeholder="Guests" min="1" value="1">
+      <button class="btn btn-primary" onclick="handleSearch()">Search</button>
+    </div>
+  </section>
+
+  <section class="section" id="destinations">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Featured Destinations</h2>
+        <p class="section-subtitle">Explore our handpicked destinations</p>
+      </div>
+      <div class="grid grid-3" id="featuredDestinations"><div class="loading"></div></div>
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="/destinations" class="btn btn-primary">View All Destinations</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:var(--background-light);">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Popular Packages</h2>
+        <p class="section-subtitle">Best tour packages curated for you</p>
+      </div>
+      <div class="grid grid-3" id="featuredPackages"><div class="loading"></div></div>
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="/packages" class="btn btn-primary">View All Packages</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:#fff;">
+    <div class="container">
+      <h2 class="section-title" style="text-align:center;">Why Choose TravelXplore</h2>
+      <div class="grid grid-4">
+        <div style="text-align:center;">
+          <div style="font-size:3rem;font-weight:900;">500+</div>
+          <div>Destinations</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:3rem;font-weight:900;">50K+</div>
+          <div>Happy Travelers</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:3rem;font-weight:900;">1000+</div>
+          <div>Tour Packages</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:3rem;font-weight:900;">24/7</div>
+          <div>Customer Support</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="background:linear-gradient(135deg,#1a237e 0%,#283593 100%);color:#fff;">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">Subscribe to Our Newsletter</h2>
+      <p>Get exclusive deals, tips, and guides</p>
+      <form style="display:flex;gap:1rem;max-width:600px;margin:2rem auto;">
+        <input type="email" placeholder="Enter your email" required style="flex:1;padding:1rem;border:none;border-radius:8px;">
+        <button type="submit" class="btn btn-secondary">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h3>TravelXplore</h3>
+        <p>Your trusted partner for unforgettable travel experiences.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul class="footer-links">
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/destinations">Destinations</a></li>
+          <li><a href="/packages">Packages</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Support</h3>
+        <ul class="footer-links">
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">Terms & Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Info</h3>
+        <ul class="footer-links">
+          <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+          <li><i class="fas fa-envelope"></i> info@travelxplore.com</li>
+          <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">&copy; 2025 TravelXplore. All rights reserved.</div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const dest = await TravelXplore.loadDestinations({ featured:'true', limit:6 });
+      TravelXplore.renderDestinationCards(dest,'featuredDestinations');
+      const pkg = await TravelXplore.loadPackages({ featured:'true', limit:6 });
+      TravelXplore.renderPackageCards(pkg,'featuredPackages');
+    });
+
+    function handleSearch() {
+      const v = document.getElementById('searchDestination').value;
+      window.location.href = v? `/destinations?search=${encodeURIComponent(v)}` : '/destinations';
+    }
+  </script>
+</body>
+</html>

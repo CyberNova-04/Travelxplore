@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Details - TravelXplore</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/" class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-plane-departure"></i>
+            </div>
+            <span class="logo-text">TravelXplore</span>
+        </a>
+        <ul class="nav-links">
+            <li><a href="/">Home</a></li>
+            <li><a href="/destinations">Destinations</a></li>
+            <li><a href="/packages">Packages</a></li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/contact">Contact</a></li>
+            <li id="loginBtn"><a href="/login" class="btn btn-primary">Login</a></li>
+            <li id="userMenu" style="display: none;">
+                <span id="userName"></span>
+                <a href="#" id="logoutBtn" class="btn btn-secondary">Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Loading State -->
+    <div id="loadingState" style="display: flex; justify-content: center; align-items: center; height: 100vh; margin-top: 70px;">
+        <div class="loading"></div>
+    </div>
+
+    <!-- Package Detail Content -->
+    <div id="packageDetail" style="display: none; margin-top: 70px;">
+        <!-- Package Header with Image -->
+        <div id="packageHeader"></div>
+
+        <!-- Package Content -->
+        <section class="section">
+            <div class="container">
+                <div class="grid grid-2" style="gap: 3rem; align-items: start;">
+                    <!-- Main Content -->
+                    <div>
+                        <div id="packageContent"></div>
+                    </div>
+
+                    <!-- Booking Card -->
+                    <div>
+                        <div id="bookingCard"></div>
+                        
+                        <!-- Related Packages -->
+                        <div style="margin-top: 2rem;">
+                            <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">Related Packages</h3>
+                            <div id="relatedPackages"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-section">
+                <h3>TravelXplore</h3>
+                <p>Your trusted partner for unforgettable travel experiences.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="/about">About Us</a></li>
+                    <li><a href="/destinations">Destinations</a></li>
+                    <li><a href="/packages">Packages</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                    <li><i class="fas fa-envelope"></i> info@travelxplore.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 TravelXplore. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/js/main.js"></script>
+    <script>
+        const loadPackageDetails = async () => {
+            try {
+                const packageId = window.location.pathname.split('/').pop();
+                const response = await fetch(`http://localhost:3000/api/packages/${packageId}`);
+                const data = await response.json();
+
+                if (!data.success) {
+                    throw new Error('Package not found');
+                }
+
+                const pkg = data.package;
+
+                // Hide loading, show content
+                document.getElementById('loadingState').style.display = 'none';
+                document.getElementById('packageDetail').style.display = 'block';
+
+                // Render package header
+                document.getElementById('packageHeader').innerHTML = `
+                    <div style="position: relative; height: 500px; background-image: url('${pkg.image}'); 
+                                background-size: cover; background-position: center;">
+                        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+                                    background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7));">
+                            <div class="container" style="height: 100%; display: flex; flex-direction: column; 
+                                                         justify-content: flex-end; padding: 3rem 20px;">
+                                <h1 style="color: white; font-size: 3rem; margin-bottom: 1rem;">${pkg.title}</h1>
+                                <p style="color: white; font-size: 1.2rem; opacity: 0.9;">
+                                    <i class="fas fa-map-marker-alt"></i> ${pkg.destination_name}, ${pkg.country}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Render package content
+                document.getElementById('packageContent').innerHTML = `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-card); margin-bottom: 2rem;">
+                        <h2 style="color: var(--primary-blue); margin-bottom: 1rem;">About This Package</h2>
+                        <p style="color: #666; line-height: 1.8; font-size: 1.05rem;">${pkg.description}</p>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-card); margin-bottom: 2rem;">
+                        <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-check-circle" style="color: #51cf66;"></i> What's Included
+                        </h3>
+                        <ul style="color: #666; line-height: 2;">
+                            ${pkg.inclusions.split(',').map(item => `<li><i class="fas fa-check" style="color: #51cf66;"></i> ${item.trim()}</li>`).join('')}
+                        </ul>
+                    </div>
+
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-card);">
+                        <h3 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-times-circle" style="color: #ff6b6b;"></i> What's Not Included
+                        </h3>
+                        <ul style="color: #666; line-height: 2;">
+                            ${pkg.exclusions.split(',').map(item => `<li><i class="fas fa-times" style="color: #ff6b6b;"></i> ${item.trim()}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+
+                // Render booking card
+                document.getElementById('bookingCard').innerHTML = `
+                    <div style="background: white; padding: 2rem; border-radius: 12px; box-shadow: var(--shadow-card); 
+                                position: sticky; top: 90px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                            <div>
+                                <div style="font-size: 2rem; font-weight: 700; color: var(--accent-color);">
+                                    ${TravelXplore.formatPrice(pkg.price)}
+                                </div>
+                                <div style="color: #666; font-size: 0.9rem;">per person</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #ffd700; font-size: 1.2rem;">${TravelXplore.createStarRating(pkg.rating)}</div>
+                                <div style="color: #666; font-size: 0.9rem;">${pkg.rating} rating</div>
+                            </div>
+                        </div>
+
+                        <div style="border-top: 1px solid #e0e0e0; padding-top: 1.5rem; margin-bottom: 1.5rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span style="color: #666;"><i class="fas fa-clock"></i> Duration</span>
+                                <strong style="color: var(--primary-blue);">${pkg.duration_days} Days</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                                <span style="color: #666;"><i class="fas fa-users"></i> Max Guests</span>
+                                <strong style="color: var(--primary-blue);">${pkg.max_guests} People</strong>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #666;"><i class="fas fa-map-marker-alt"></i> Location</span>
+                                <strong style="color: var(--primary-blue);">${pkg.country}</strong>
+                            </div>
+                        </div>
+
+                        <button class="btn btn-primary" style="width: 100%; padding: 1rem; font-size: 1.1rem;" 
+                                onclick="alert('Booking feature coming soon!')">
+                            Book Now <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        <div style="margin-top: 1rem; text-align: center;">
+                            <a href="/contact" style="color: var(--primary-blue); text-decoration: none;">
+                                <i class="fas fa-question-circle"></i> Questions? Contact us
+                            </a>
+                        </div>
+                    </div>
+                `;
+
+                // Render related packages
+                if (data.relatedPackages && data.relatedPackages.length > 0) {
+                    document.getElementById('relatedPackages').innerHTML = data.relatedPackages.map(related => `
+                        <div class="card" onclick="window.location.href='/package/${related.id}'" style="margin-bottom: 1rem;">
+                            <img src="${related.image}" alt="${related.title}" class="card-image" style="height: 150px;">
+                            <div class="card-content">
+                                <h4 style="color: var(--primary-blue); margin-bottom: 0.5rem; font-size: 1rem;">${related.title}</h4>
+                                <div style="display: flex; justify-content: space-between; align-items: center;">
+                                    <span style="color: var(--accent-color); font-weight: 700;">${TravelXplore.formatPrice(related.price)}</span>
+                                    <span style="color: #666; font-size: 0.85rem;">${related.duration_days} Days</span>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+
+            } catch (error) {
+                console.error('Error loading package:', error);
+                document.getElementById('loadingState').innerHTML = `
+                    <div style="text-align: center; padding: 3rem;">
+                        <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: #ff6b6b; margin-bottom: 1rem;"></i>
+                        <h2>Package Not Found</h2>
+                        <p style="color: #666; margin: 1rem 0;">The package you're looking for doesn't exist.</p>
+                        <a href="/packages" class="btn btn-primary">View All Packages</a>
+                    </div>
+                `;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', loadPackageDetails);
+    </script>
+</body>
+</html>
