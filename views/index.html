@@ -183,12 +183,29 @@
     <div class="container" style="text-align:center;">
       <h2 class="section-title">Subscribe to Our Newsletter</h2>
       <p>Get exclusive deals, tips, and guides</p>
-      <form style="display:flex;gap:1rem;max-width:600px;margin:2rem auto;">
-        <input type="email" placeholder="Enter your email" required style="flex:1;padding:1rem;border:none;border-radius:8px;">
-        <button type="submit" class="btn btn-secondary">Subscribe</button>
-      </form>
+<form id="newsletterForm" style="display:flex;gap:1rem;max-width:600px;margin:2rem auto;">
+  <input type="email" name="email" placeholder="Enter your email" required style="flex:1;padding:1rem;border:none;border-radius:8px;">
+  <button type="submit" class="btn btn-secondary">Subscribe</button>
+</form>
+
+
     </div>
   </section>
+  
+<script>
+document.getElementById('newsletterForm').addEventListener('submit', async function(e) {
+  e.preventDefault();
+  const email = this.email.value;
+  const res = await fetch('/api/newsletter/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  });
+  const result = await res.json();
+  alert(result.message);
+});
+</script>
+
 
   <footer class="footer">
     <div class="footer-grid">
