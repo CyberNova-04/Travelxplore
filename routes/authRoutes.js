@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
-const db = require('../config/database');
+const db = require('../config/database'); // This is promisePool
 const { verifyToken } = require('../middleware/auth');
 
 // Register User
@@ -17,20 +17,31 @@ router.post('/register', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, errors: errors.array() });
     }
+    
     const { username, email, password, full_name } = req.body;
+    
     try {
-        const [existing] = await db.query('SELECT id FROM users WHERE email = ? OR username = ?', [email, username]);
+        // Use execute() instead of query() for promise pool
+        const [existing] = await db.execute('SELECT id FROM users WHERE email = ? OR username = ?', [email, username]);
+        
         if (existing.length) {
             return res.status(400).json({ success: false, message: 'Email or username already taken' });
         }
+        
         const hashedPassword = await bcrypt.hash(password, 10);
-        const [result] = await db.query(
-            'INSERT INTO users (username,email,password,full_name,role) VALUES (?,?,?,?,?)',
+        
+        const [result] = await db.execute(
+            'INSERT INTO users (username, email, password, full_name, role) VALUES (?, ?, ?, ?, ?)',
             [username, email, hashedPassword, full_name, 'user']
         );
-        res.status(201).json({ success: true, message: 'Registered successfully', userId: result.insertId });
+        
+        res.status(201).json({ 
+            success: true, 
+            message: 'Registered successfully', 
+            userId: result.insertId 
+        });
     } catch (err) {
-        console.error(err);
+        console.error('Registration error:', err);
         res.status(500).json({ success: false, message: 'Server error during registration' });
     }
 });
@@ -44,35 +55,53 @@ router.post('/login', [
     if (!errors.isEmpty()) {
         return res.status(400).json({ success: false, errors: errors.array() });
     }
+    
     const { email, password } = req.body;
+    
     try {
-        const [users] = await db.query('SELECT * FROM users WHERE email = ?', [email]);
+        // Use execute() instead of query()
+        const [users] = await db.execute('SELECT * FROM users WHERE email = ?', [email]);
+        
         if (!users.length) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
+        
         const user = users[0];
         const valid = await bcrypt.compare(password, user.password);
+        
         if (!valid) {
             return res.status(401).json({ success: false, message: 'Invalid credentials' });
         }
+        
+        // Create JWT token
         const token = jwt.sign(
-            { id: user.id, role: user.role, username: user.username },
+            { id: user.id, email: user.email, role: user.role, username: user.username },
             process.env.JWT_SECRET,
-            { expiresIn: process.env.JWT_EXPIRE }
+            { expiresIn: process.env.JWT_EXPIRE || '7d' }
         );
+        
+        // Set cookie with proper settings
         res.cookie('token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            maxAge: 7 * 24 * 60 * 60 * 1000
+            maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+            sameSite: 'lax'
         });
+        
         res.json({
             success: true,
             message: 'Login successful',
             token,
-            user: { id: user.id, username: user.username, email: user.email, full_name: user.full_name, role: user.role }
+            user: { 
+                id: user.id, 
+                username: user.username, 
+                email: user.email, 
+                full_name: user.full_name, 
+                role: user.role 
+            }
         });
     } catch (err) {
-        console.error(err);
+        console.error('Login error:', err);
         res.status(500).json({ success: false, message: 'Server error during login' });
     }
 });
@@ -86,26 +115,45 @@ router.post('/logout', (req, res) => {
 // Get Current User
 router.get('/me', verifyToken, async (req, res) => {
     try {
-        const [users] = await db.query(
+        // Use execute() instead of query()
+        const [users] = await db.execute(
             'SELECT id, username, email, full_name, role, created_at FROM users WHERE id = ?',
             [req.user.id]
         );
+        
         if (!users.length) {
             return res.status(404).json({ success: false, message: 'User not found' });
         }
+        
         res.json({ success: true, user: users[0] });
     } catch (err) {
-        console.error(err);
+        console.error('Get user error:', err);
         res.status(500).json({ success: false, message: 'Server error' });
     }
 });
 
-// Verify Token
-router.get('/verify', verifyToken, (req, res) => {
-    res.json({
-        success: true,
-        user: { id: req.user.id, username: req.user.username, role: req.user.role }
-    });
+// Verify Token (FIXED - no middleware dependency, checks cookie directly)
+router.get('/verify', async (req, res) => {
+    const token = req.cookies.token;
+    
+    if (!token) {
+        return res.json({ success: false, message: 'Not authenticated' });
+    }
+    
+    try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        res.json({ 
+            success: true, 
+            user: { 
+                id: decoded.id, 
+                email: decoded.email,
+                username: decoded.username, 
+                role: decoded.role 
+            } 
+        });
+    } catch (err) {
+        res.json({ success: false, message: 'Invalid token' });
+    }
 });
 
 module.exports = router;

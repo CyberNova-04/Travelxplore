@@ -48,6 +48,14 @@ app.get('/admin/destinations', (req, res) => res.sendFile(path.join(__dirname, '
 app.get('/admin/packages', (req, res) => res.sendFile(path.join(__dirname, 'views', 'admin', 'packages.html')));
 app.get('/admin/add-destination', (req, res) => res.sendFile(path.join(__dirname, 'views', 'admin', 'add-destination.html')));
 app.get('/admin/add-package', (req, res) => res.sendFile(path.join(__dirname, 'views', 'admin', 'add-package.html')));
+// Admin edit pages routes - ADD THESE
+app.get('/admin/edit-destination', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/admin/edit-destination.html'));
+});
+
+app.get('/admin/edit-package', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views/admin/edit-package.html'));
+});
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ success: true, message: 'Server is running!' }));
