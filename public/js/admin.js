@@ -1,5 +1,5 @@
+// const API_URL = window.location.origin + '/api';
 const API_URL = window.location.origin + '/api';
-
 
 // Check admin auth
 const checkAdminAuth = async () => {

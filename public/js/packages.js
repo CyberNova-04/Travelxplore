@@ -1,7 +1,7 @@
 console.log('✅ packages.js loaded');
 
+// const API_URL = window.location.origin + '/api';
 const API_URL = window.location.origin + '/api';
-
 
 // Load packages
 async function loadPackages() {
