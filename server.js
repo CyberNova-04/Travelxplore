@@ -14,7 +14,6 @@ const newsletterRoutes = require('./routes/newsletterRoutes');
 const app = express();
 
 // CORS
-const cors = require('cors');
 
 app.use(cors({
     origin: process.env.FRONTEND_URL || 'http://localhost:3000',
