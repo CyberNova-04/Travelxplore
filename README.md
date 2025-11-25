@@ -2,11 +2,11 @@
 
 A full-stack travel booking website with admin panel built using Node.js, Express, MySQL, and vanilla JavaScript.
 
+## 🚀 Quick Start
+
 1. **Clone this repo:**
 git clone https://github.com/CyberNova-04/TravelXplore.git
 cd TravelXplore
-
-text
 
 2. **Install dependencies:**
 npm install
@@ -20,7 +20,6 @@ npm install
 
 5. **Start the server:**
 npm start
-
 - Website: `http://localhost:3000`
 - Admin Panel: `http://localhost:3000/admin`
 
