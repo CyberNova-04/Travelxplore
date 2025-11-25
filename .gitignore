@@ -1,24 +1,12 @@
-# Dependencies
 node_modules/
-
-# Environment Variables
 .env
-.env.local
-.env.*.local
-
-# Logs
-logs
+uploads/*.jpg
+uploads/*.png
+uploads/*.jpeg
+uploads/*.gif
+uploads/*.webp
+!uploads/.gitkeep
 *.log
-npm-debug.log*
-
-# OS Files
 .DS_Store
-Thumbs.db
-
-# IDE
+npm-debug.log*
 .vscode/
-.idea/
-
-# Uploads (optional - remove if you want to track uploaded images)
-public/images/uploads/*
-!public/images/uploads/.gitkeep
