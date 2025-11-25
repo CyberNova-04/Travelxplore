@@ -69,5 +69,18 @@ router.delete('/:id', verifyToken, isAdmin, async (req, res) => {
         res.status(500).json({ success: false, message: 'Server error' });
     }
 });
+// Mark message as read/unread (ADMIN ONLY)
+router.put('/:id/status', verifyToken, isAdmin, async (req, res) => {
+    const { status } = req.body; // status should be 'new' or 'read'
+    if (!['new','read'].includes(status)) {
+        return res.status(400).json({ success: false, message: 'Bad status' });
+    }
+    const [result] = await db.execute('UPDATE contact_messages SET status = ? WHERE id = ?', [status, req.params.id]);
+    if (!result.affectedRows) {
+        return res.status(404).json({ success: false, message: 'Message not found' });
+    }
+    res.json({ success: true, message: 'Status updated' });
+});
+
 
 module.exports = router;

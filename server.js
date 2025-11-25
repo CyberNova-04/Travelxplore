@@ -86,6 +86,14 @@ app.get('/admin/edit-package', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'admin', 'edit-package.html'));
 });
 
+app.get('/admin/newsletter', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'newsletter.html'));
+});
+
+app.get('/admin/contact-messages', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'admin', 'contact-messages.html'));
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({ success: true, message: 'Server is running!' });
