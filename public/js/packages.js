@@ -90,7 +90,7 @@ function renderPackages(packages) {
                     <div class="package-footer">
                         <div class="price">
                             <span class="from">From</span>
-                            <span class="amount">$${price}</span>
+                            <span class="amount">₹${price}</span>
                         </div>
                         <a href="/package/${id}" class="btn-view">
                             View Details <i class="fas fa-arrow-right"></i>

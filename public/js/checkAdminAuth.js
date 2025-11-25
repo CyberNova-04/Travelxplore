@@ -46,7 +46,7 @@ const renderAdminPackages = (packages) => {
                         <i class="fas fa-calendar-alt"></i> ${pkgDuration} Days
                     </span>
                 </td>
-                <td style="font-weight:800;color:#667eea;font-size:1.3rem;">$${pkgPrice}</td>
+                <td style="font-weight:800;color:#667eea;font-size:1.3rem;">₹${pkgPrice}</td>
                 <td>
                     <span class="badge ${pkgFeatured ? 'badge-success' : 'badge-secondary'}">
                         ${pkgFeatured ? '<i class="fas fa-star"></i> Featured' : 'Regular'}

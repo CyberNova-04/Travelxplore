@@ -96,7 +96,7 @@ const initMobileMenu = () => {
 };
 
 // Utilities
-const formatPrice = price => new Intl.NumberFormat('en-US',{style:'currency',currency:'USD'}).format(price);
+const formatPrice = price => new Intl.NumberFormat('en-US',{style:'currency',currency:'INR'}).format(price);
 const formatDate = date => new Date(date).toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
 const createStarRating = rating => {
     const full = Math.floor(rating);

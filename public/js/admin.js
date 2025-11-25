@@ -196,7 +196,7 @@ const renderAdminDestinations = (destinations) => {
                         <i class="fas fa-globe" style="color: #667eea;"></i> ${destCountry}
                     </div>
                 </td>
-                <td><span style="font-weight: 800; color: #667eea; font-size: 1.375rem;">$${destPrice}</span></td>
+                <td><span style="font-weight: 800; color: #667eea; font-size: 1.375rem;">₹${destPrice}</span></td>
                 <td>
                     <span style="display: inline-flex; align-items: center; gap: 0.5rem; background: linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%); padding: 0.625rem 1rem; border-radius: 12px; color: #f59e0b; font-weight: 700;">
                         <i class="fas fa-star"></i> ${destRating}
@@ -249,8 +249,8 @@ const renderAdminPackages = (packages) => {
     
     tbody.innerHTML = packages.map(pkg => {
         // CORRECT FIELD MAPPING
-        const pkgName = pkg.name || 'Unnamed Package';
-        const pkgDuration = pkg.duration || 0;
+        const pkgName = pkg.title || 'Unnamed Package';
+        const pkgDuration = pkg.durationdays || 0;
         const pkgDestName = pkg.destination_name || 'Unknown Destination';
         const pkgPrice = parseFloat(pkg.price || 0).toFixed(2);
         const pkgFeatured = pkg.featured === 1 || pkg.featured === true;
@@ -271,7 +271,7 @@ const renderAdminPackages = (packages) => {
                         <i class="fas fa-calendar-alt"></i> ${pkgDuration} ${pkgDuration === 1 ? 'Day' : 'Days'}
                     </span>
                 </td>
-                <td><span style="font-weight: 800; color: #667eea; font-size: 1.375rem;">$${pkgPrice}</span></td>
+                <td><span style="font-weight: 800; color: #667eea; font-size: 1.375rem;">₹${pkgPrice}</span></td>
                 <td>
                     <span class="badge ${pkgFeatured ? 'badge-success' : 'badge-secondary'}" style="padding: 0.625rem 1.25rem; border-radius: 25px; font-size: 0.8rem; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem;">
                         ${pkgFeatured ? '<i class="fas fa-star"></i> Featured' : '<i class="fas fa-circle"></i> Regular'}

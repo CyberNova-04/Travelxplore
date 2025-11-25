@@ -83,9 +83,9 @@
       <div class="footer-section">
         <h3>Contact Info</h3>
         <ul class="footer-links">
-          <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-          <li><i class="fas fa-envelope"></i> info@travelxplore.com</li>
-          <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street</li>
+          <li><i class="fas fa-phone"></i>+91 8271615556</li>
+          <li><i class="fas fa-envelope"></i> killsdead04@gmail.com</li>
+          <li><i class="fas fa-map-marker-alt"></i> Sarla Birla University, Ranchi</li>
         </ul>
       </div>
     </div>
@@ -94,23 +94,102 @@
 
     <div class="grid grid-3" id="packagesGrid"></div>
 
-  <script src="/js/main.js"></script>
-  <script src="/js/packages.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      document.getElementById('packagesGrid').innerHTML = '<div class="loading"></div>';
-
-      try {
-        const data = await TravelXplore.loadPackages({});
-        TravelXplore.renderPackageCards(data, 'packagesGrid');
-      } catch (err) {
+ <script src="js/main.js"></script>
+<script src="js/packages.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    let allPackages = [];
+    
+    // Load packages with URL params
+async function loadAllPackages() {
+    const grid = document.getElementById('packagesGrid');
+    grid.innerHTML = '<div class="loading"></div>';
+    
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    const minPriceParam = urlParams.get('minPrice');
+    const maxPriceParam = urlParams.get('maxPrice');
+    
+    try {
+        const data = await TravelXplore.loadPackages();
+        allPackages = data;
+        
+        // Pre-fill inputs if params exist
+        if (searchParam) {
+            document.getElementById('searchInput').value = searchParam;
+        }
+        if (minPriceParam) {
+            document.getElementById('minPrice').value = minPriceParam;
+        }
+        if (maxPriceParam) {
+            document.getElementById('maxPrice').value = maxPriceParam;
+        }
+        
+        renderPackages(data);
+        
+        // Auto-apply filters if URL has params
+        if (searchParam || minPriceParam || maxPriceParam) {
+            applyFilters();
+        }
+    } catch (err) {
         console.error(err);
-        document.getElementById('packagesGrid').innerHTML =
-          '<p class="text-center">Failed to load packages.</p>';
-      }
-    });
-  </script>
+        grid.innerHTML = '<p class="text-center">Failed to load packages.</p>';
+    }
+}
 
+    
+    // Render packages
+    function renderPackages(packages) {
+        const grid = document.getElementById('packagesGrid');
+        const emptyState = document.getElementById('emptyState');
+        
+        if (!packages || packages.length === 0) {
+            grid.innerHTML = '';
+            emptyState.style.display = 'flex';
+            return;
+        }
+        
+        emptyState.style.display = 'none';
+        TravelXplore.renderPackageCards(packages, 'packagesGrid');
+    }
+    
+    // Apply filters function
+    window.applyFilters = function() {
+        const searchValue = document.getElementById('searchInput').value.toLowerCase().trim();
+        const minPrice = parseFloat(document.getElementById('minPrice').value) || 0;
+        const maxPrice = parseFloat(document.getElementById('maxPrice').value) || Infinity;
+        
+        let filtered = allPackages;
+        
+        // Filter by search
+        if (searchValue) {
+            filtered = filtered.filter(pkg => 
+                pkg.title.toLowerCase().includes(searchValue) ||
+                (pkg.description && pkg.description.toLowerCase().includes(searchValue)) ||
+                (pkg.destinationname && pkg.destinationname.toLowerCase().includes(searchValue))
+            );
+        }
+        
+        // Filter by price range
+        filtered = filtered.filter(pkg => {
+            const price = parseFloat(pkg.price);
+            return price >= minPrice && price <= maxPrice;
+        });
+        
+        renderPackages(filtered);
+    };
+    
+    // Search on Enter key
+    document.getElementById('searchInput').addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            applyFilters();
+        }
+    });
+    
+    // Initial load
+    await loadAllPackages();
+});
+</script>
 </body>
 </html>

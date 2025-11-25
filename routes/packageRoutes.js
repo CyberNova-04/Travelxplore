@@ -33,51 +33,63 @@ const upload = multer({
 });
 
 // ✅ GET all packages - FIXED
+// GET all packages - WITH SEARCH AND FILTER SUPPORT
 router.get('/', async (req, res) => {
     try {
-        console.log('🔍 Fetching all packages...');
+        const { search, minPrice, maxPrice, featured } = req.query;
         
-        const [packages] = await db.execute(`
-            SELECT 
-                p.id,
-                p.title,
-                p.destination_id,
-                p.duration_days,
-                p.price,
-                p.description,
-                p.image,
-                p.featured,
-                p.rating,
-                p.max_guests,
-                p.inclusions,
-                p.exclusions,
-                d.name as destination_name,
-                d.country
-            FROM packages p 
-            LEFT JOIN destinations d ON p.destination_id = d.id 
-            ORDER BY p.featured DESC, p.id DESC
-        `);
+        console.log('Fetching packages with filters:', { search, minPrice, maxPrice, featured });
         
-        console.log(`✅ Found ${packages.length} packages`);
-        if (packages.length > 0) {
-            console.log('📦 Sample:', {
-                id: packages[0].id,
-                title: packages[0].title,
-                duration_days: packages[0].duration_days,
-                max_guests: packages[0].max_guests
-            });
+        let query = `
+            SELECT p.id, p.title, 
+                   p.destination_id as destinationid, 
+                   p.duration_days as durationdays, 
+                   p.price, p.description, 
+                   p.image, p.featured, p.rating, 
+                   p.max_guests as maxguests, 
+                   p.inclusions, p.exclusions,
+                   d.name as destinationname, d.country
+            FROM packages p
+            LEFT JOIN destinations d ON p.destination_id = d.id
+            WHERE 1=1
+        `;
+        
+        const params = [];
+        
+        // Search by title, description, or destination name
+        if (search) {
+            query += ` AND (p.title LIKE ? OR p.description LIKE ? OR d.name LIKE ? OR d.country LIKE ?)`;
+            const searchPattern = `%${search}%`;
+            params.push(searchPattern, searchPattern, searchPattern, searchPattern);
         }
         
-        res.json({ 
-            success: true, 
-            packages: packages 
-        });
+        // Filter by minimum price
+        if (minPrice) {
+            query += ` AND p.price >= ?`;
+            params.push(parseFloat(minPrice));
+        }
+        
+        // Filter by maximum price
+        if (maxPrice) {
+            query += ` AND p.price <= ?`;
+            params.push(parseFloat(maxPrice));
+        }
+        
+        // Filter by featured
+        if (featured === 'true') {
+            query += ` AND p.featured = 1`;
+        }
+        
+        query += ` ORDER BY p.featured DESC, p.id DESC`;
+        
+        const [packages] = await db.execute(query, params);
+        
+        console.log(`Found ${packages.length} packages`);
+        
+        res.json({ success: true, packages });
     } catch (err) {
-        console.error('❌ Error:', err);
-        res.status(500).json({ 
-            success: false, 
-            message: 'Server error: ' + err.message 
-        });
+        console.error('Error:', err);
+        res.status(500).json({ success: false, message: 'Server error: ' + err.message });
     }
 });
 

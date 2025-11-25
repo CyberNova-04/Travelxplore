@@ -33,9 +33,35 @@ const upload = multer({
 });
 
 // GET all destinations
+// GET all destinations with search and filter support
 router.get('/', async (req, res) => {
     try {
-        const [destinations] = await db.execute('SELECT * FROM destinations ORDER BY id DESC');
+        const { search, country, featured } = req.query;
+        
+        let query = 'SELECT * FROM destinations WHERE 1=1';
+        const params = [];
+        
+        // Search by name or country
+        if (search) {
+            query += ' AND (name LIKE ? OR country LIKE ? OR description LIKE ?)';
+            const searchPattern = `%${search}%`;
+            params.push(searchPattern, searchPattern, searchPattern);
+        }
+        
+        // Filter by country
+        if (country && country !== 'all') {
+            query += ' AND country = ?';
+            params.push(country);
+        }
+        
+        // Filter by featured
+        if (featured === 'true') {
+            query += ' AND featured = 1';
+        }
+        
+        query += ' ORDER BY featured DESC, id DESC';
+        
+        const [destinations] = await db.execute(query, params);
         res.json({ success: true, destinations });
     } catch (err) {
         console.error('Get destinations error:', err);

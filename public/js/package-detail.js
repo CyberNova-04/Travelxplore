@@ -50,7 +50,7 @@ function renderPackageDetails(pkg) {
     
     // Price & info
     const priceEl = document.querySelector('.price');
-    if (priceEl) priceEl.textContent = `$${price}`;
+    if (priceEl) priceEl.textContent = `₹${price}`;
     
     const durationEl = document.querySelector('.info-item:nth-child(1) .info-value');
     if (durationEl) durationEl.textContent = `${duration} Days`;

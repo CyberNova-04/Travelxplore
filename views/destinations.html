@@ -39,10 +39,12 @@
         <button class="btn btn-primary" onclick="applyFilters()">Apply Filters</button>
       </div>
       <div class="grid grid-3" id="destinationsGrid"><div class="loading"></div></div>
-      <div id="emptyState" class="empty-state" style="display:none;">
-        <i class="fas fa-map-marked-alt empty-state-icon"></i>
-        <h3>No destinations found</h3>
-        <p>Try adjusting your search or filters</p>
+     <div id="emptyState" class="empty-state" style="display:none; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; text-align: center;">
+    <i class="fas fa-map-marked-alt empty-state-icon" style="font-size: 4rem; color: #ccc; margin-bottom: 1rem;"></i>
+    <h3>No destinations found</h3>
+    <p>Try adjusting your search or filters</p>
+</div>
+
       </div>
     </div>
   </section>
@@ -79,9 +81,9 @@
       <div class="footer-section">
         <h3>Contact Info</h3>
         <ul class="footer-links">
-          <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
-          <li><i class="fas fa-envelope"></i> info@travelxplore.com</li>
-          <li><i class="fas fa-map-marker-alt"></i> 123 Travel Street</li>
+          <li><i class="fas fa-phone"></i>+91 8261615556</li>
+          <li><i class="fas fa-envelope"></i>killsdead04@gmail.com</li>
+          <li><i class="fas fa-map-marker-alt"></i> Sarla Birla University, Ranchi</li>
         </ul>
       </div>
     </div>
@@ -91,23 +93,110 @@
    <!-- Replace your existing grid + script with this -->
   <div class="grid grid-3" id="destinationsGrid"></div>
 
-  <script src="/js/main.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      // Show loading spinner
-      document.getElementById('destinationsGrid').innerHTML = '<div class="loading"></div>';
-
-      // Fetch and render
-      try {
-        const data = await TravelXplore.loadDestinations({});
-        TravelXplore.renderDestinationCards(data, 'destinationsGrid');
-      } catch (err) {
+  <script src="js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+    let allDestinations = [];
+    
+   // Load destinations with URL params
+async function loadDestinations() {
+    document.getElementById('destinationsGrid').innerHTML = '<div class="loading"></div>';
+    
+    // Get URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    
+    try {
+        const data = await TravelXplore.loadDestinations();
+        allDestinations = data;
+        
+        // Pre-fill search input if param exists
+        if (searchParam) {
+            document.getElementById('searchInput').value = searchParam;
+        }
+        
+        renderDestinations(data);
+        populateCountryFilter(data);
+        
+        // Auto-apply filters if URL has search param
+        if (searchParam) {
+            applyFilters();
+        }
+    } catch (err) {
         console.error(err);
-        document.getElementById('destinationsGrid').innerHTML =
-          '<p class="text-center">Failed to load destinations.</p>';
-      }
+        document.getElementById('destinationsGrid').innerHTML = '<p class="text-center">Failed to load destinations.</p>';
+    }
+}
+
+    
+    // Render destinations
+    function renderDestinations(destinations) {
+        const grid = document.getElementById('destinationsGrid');
+        const emptyState = document.getElementById('emptyState');
+        
+        if (!destinations || destinations.length === 0) {
+            grid.innerHTML = '';
+            emptyState.style.display = 'flex';
+            return;
+        }
+        
+        emptyState.style.display = 'none';
+        TravelXplore.renderDestinationCards(destinations, 'destinationsGrid');
+    }
+    
+    // Populate country dropdown
+    function populateCountryFilter(destinations) {
+        const countryFilter = document.getElementById('countryFilter');
+        const countries = [...new Set(destinations.map(d => d.country))].sort();
+        
+        countryFilter.innerHTML = '<option value="all">All Countries</option>';
+        countries.forEach(country => {
+            const option = document.createElement('option');
+            option.value = country;
+            option.textContent = country;
+            countryFilter.appendChild(option);
+        });
+    }
+    
+    // Apply filters function
+    window.applyFilters = function() {
+        const searchValue = document.getElementById('searchInput').value.toLowerCase().trim();
+        const countryValue = document.getElementById('countryFilter').value;
+        
+        let filtered = allDestinations;
+        
+        // Filter by search
+        if (searchValue) {
+            filtered = filtered.filter(dest => 
+                dest.name.toLowerCase().includes(searchValue) ||
+                dest.country.toLowerCase().includes(searchValue) ||
+                (dest.description && dest.description.toLowerCase().includes(searchValue))
+            );
+        }
+        
+        // Filter by country
+        if (countryValue && countryValue !== 'all') {
+            filtered = filtered.filter(dest => dest.country === countryValue);
+        }
+        
+        renderDestinations(filtered);
+    };
+    
+    // Search on Enter key
+    document.getElementById('searchInput').addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+            applyFilters();
+        }
     });
-  </script>
+    
+    // Filter on country change
+    document.getElementById('countryFilter').addEventListener('change', applyFilters);
+    
+    // Initial load
+    await loadDestinations();
+});
+
+</script>
 
 </body>
 </html>
